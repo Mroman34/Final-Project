@@ -1,0 +1,73 @@
+<html>
+	
+	<head>
+		<title>Detail Page</title>
+		<style>
+		body {
+            background-color: white;
+			width: 900px;
+			margin-left: auto;
+			margin-right: auto;
+            text-align: center;
+        }
+		
+        img {
+			width: 800px;
+			height: auto;
+		}
+		
+		div {
+			font-size: 40px;
+			color: #FF1E00;
+		}
+		
+		a {
+			font-size: 25px;
+			color: #102D5C;
+			text-decoration: none;
+			
+		}
+		
+
+		</style>
+	</head>	
+	<body>
+		<h1>Driver Details</h1>
+		<div id="driverInfo">
+		
+		</div>
+	
+		<a href="index.html">Go back to winners list</a>
+	    <script>
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const driverId = urlParams.get('id');
+        
+		fetch(`http://157.230.214.215/api/mike_f1_2024/${driverId}`)
+            .then(result => result.json()) 
+			.then(driver => {
+                const driverInfo = document.getElementById('driverInfo');
+
+                const driverImage = document.createElement('img');
+                driverImage.id = 'driverImage';
+                driverImage.src = driver.image;
+                driverImage.alt = driver.name;
+                driverInfo.appendChild(driverImage);
+
+                const driverDetails = [
+                    `Driver Name: ${driver.Driver}`,
+                    `Constructor: ${driver.Constructor}`,
+                    `Wins in 2024: ${driver.Wins}`,
+                ];
+
+                driverDetails.forEach(detail => {
+                    const detailParagraph = document.createElement('p');
+                    detailParagraph.textContent = detail;
+                    driverInfo.appendChild(detailParagraph);
+                });
+            })
+
+    </script>
+	</body>
+
+</html>
